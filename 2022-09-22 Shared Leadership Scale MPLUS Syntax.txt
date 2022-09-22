@@ -1,0 +1,775 @@
+!######################################################################################## 
+
+ !Mplus syntax for "The Effective Measurement of Shared Leadership: A Multi-scale 
+ !Comparison", Spedding, Brough, Hawkes, & Chan (2022).
+ !Leadership & Organization Development Journal (Manuscript ID LODJ-10-2021-0453.R1).
+
+ !Run each block individually to obtain model parameters and fit statistics (presented 
+ !collectively here). This syntax is for the structural models, for measurement models
+ !simply comment out the "Team interdependence task", "Team interdependence goal", and
+ !"Team potency" variables/items from both the "Usevariable =" and "Model:" sections.
+
+ !Analysis conducted with Mplus v7.4 (Muthen & Muthen)
+
+!######################################################################################## 
+!######################################################################################## 
+
+ !Syntax for "The Effective Measurement of Shared Leadership: A Multi-scale Comparison";
+ !Copyright 2020, Jason Spedding, All rights reserved.
+
+  Title: Avolio, Sivasubramaniam, Murry, Jung, & Garger (2003);
+ 
+  Data:
+  File is DL DATA v.04 Mplus n = 328.csv;
+  Analysis:
+  Estimator = MLR;
+  H1iterations = 50000;
+
+  Variable:
+  names are  ID Gender Age Ttenure Otenure Hours Num_mem IDcheck ValidRes
+  Density Pot_1 Pot_2 Pot_3 Pot_4 Pot_5 Pot_6 Pot_7 Pot_8 Inter_1 Inter_2 
+  Inter_3 Inter_4 Inter_5 Inter_6 TMLQ_1 TMLQ_2 TMLQ_3 TMLQ_4 TMLQ2_1 TMLQ2_2 
+  TMLQ2_3 TMLQ2_4 TMLQ2_5 TMLQ3_1 TMLQ3_2 TMLQ3_3 TMLQ3_4 TMLQ3_5 TMLQ3_6 
+  TMLQ3_7 TMLQ4_1 TMLQ4_2 TMLQ4_3 TMLQ4_4 TMLQ4_5 TMLQ4_6 TMLQ4_7 Dir_1 Dir_2 
+  Dir_3 Dir_4 Dir_5 Dir_6 TAL_1 TAL_2 TAL_3 TAL_4 TAL_5 TAL_6 MBE_1 MBE_2 MBE_3 
+  MBE_4 MBE_5 MBE_6 MBE_7 MBE_8 MBE_9 MBE_10 TFL_1 TFL_2 TFL_3 TFL_4 TFL_5 TFL_6 
+  TFL_7 TFL_8 TFL_9 TFL_10 TFL_11 TFL_12 TFL2_1 TFL2_2 TFL2_3 TFL2_4 TFL2_5 TFL2_6 
+  TFL2_7 TFL2_8 Ave_1 Ave_2 Ave_3 Ave_4 EMP_1 EMP_2 EMP_3 EMP_4 EMP_5 EMP_6 EMP_7 
+  EMP_8 EMP_9 EMP2_1 EMP2_2 EMP2_3 EMP2_4 EMP2_5 EMP2_6 EMP2_7 EMP2_8 EMP2_9 
+  EMP2_10 EMP2_11 EMP2_12 EMP2_13 HD_V_1 HD_V_2 HD_V_3 HD_V_4 HD_V_5 HD_V_6 HD_V_7 
+  HD_V_8 HD_V_9 HD_V_10 HD_V_11 HD_V_12 HD_V_13 HD_V2_1 HD_V2_2 HD_V2_3 HD_V2_4 
+  HD_V2_5 HD_V2_6 HD_V2_7 HD_V2_8 HD_V2_9 HD_V2_10 HD_V2_11 HD_V2_12 MG_H_1 MG_H_2 
+  MG_H_3 MG_H_4 MG_H_5 MG_H_6 MG_H_7 Cog_1 Cog_2 Cog_3 Cog_4 Cog_5 Cog_6 Cog_7 
+  Aff_1 Aff_2 Aff_3 Aff_4 Aff_5 Aff_6 Aff_7 Beh_1 Beh_2 Beh_3 Beh_4 Beh_5 Beh_6 
+  Beh_7 Struc_1 Struc_2 Struc_3 Struc_4 Consid_1 Consid_2 Consid_3 Consid_4 Monit_1 
+  Monit_2 Monit_3 Monit_4 Adapt_1 Adapt_2 Adapt_3 Eng_1 Eng_2 Eng_3 Eng_4 Eng_5 
+  Eng_6 Eng_7 Eng_8 Eng_9 Exh_1 Exh_2 Exh_3 Exh_4 Exh_5 Exh_6 Exh_7 Exh_8 Exh_R3 
+  Exh_R5 Exh_R7 Exh_R8 Aff_R3 Aff_R4 RMBE_3 REMP_5 RTMLQ2_4 RMBE_7 R_Cog_7 
+  ; 
+
+  Usevariables = 
+
+  Inter_1 Inter_2 Inter_3 !Team interdependence task
+  Inter_4 Inter_5 Inter_6 !Team interdependence goal
+
+  Pot_1 Pot_2 Pot_3 Pot_4 Pot_5 Pot_6 Pot_7 Pot_8 !Team potency
+
+  TMLQ_1 TMLQ_2 TMLQ_3 TMLQ_4 !Intellectual stimulation.
+  TMLQ2_1 TMLQ2_2 TMLQ2_3 TMLQ2_4 TMLQ2_5 !Passive-avoidant leadership.
+  TMLQ3_1 TMLQ3_2 TMLQ3_3 TMLQ3_4 TMLQ3_5 !Inspiring leadership.
+  TMLQ3_6 TMLQ3_7 TMLQ4_1 TMLQ4_2 TMLQ4_3 !Individual consideration.
+  TMLQ4_4 TMLQ4_5 TMLQ4_6 TMLQ4_7 !Management by exception.
+  ;
+
+  Missing = ALL(9999);
+  
+  Define:
+ 
+  Model:
+  
+  Tasks by Inter_1 Inter_2 Inter_3;
+  Goals by Inter_4 Inter_5 Inter_6;  
+ 
+  Potency by Pot_1 Pot_2 Pot_3 Pot_4 Pot_5 Pot_6 Pot_7 Pot_8; 
+ 
+  IntStim by TMLQ_1 TMLQ_2 TMLQ_3 TMLQ_4;
+  PassAvoi by TMLQ2_1 TMLQ2_2 TMLQ2_3 TMLQ2_4 TMLQ2_5;
+  Inspire by TMLQ3_1 TMLQ3_2 TMLQ3_3 TMLQ3_4 TMLQ3_5;
+  IndCon by TMLQ3_6 TMLQ3_7 TMLQ4_1 TMLQ4_2 TMLQ4_3;
+  MBE by TMLQ4_4 TMLQ4_5 TMLQ4_6 TMLQ4_7;
+
+  ASMJG by IntStim PassAvoi Inspire IndCon MBE;
+
+  Potency on tasks goals ASMJG;
+ 
+  Output:
+  Standardized sampstat STDYX MOD TECH1 TECH4 TECH8;
+
+!######################################################################################## 
+!######################################################################################## 
+
+ !Syntax for "The Effective Measurement of Shared Leadership: A Multi-scale Comparison";
+ !Copyright 2020, Jason Spedding, All rights reserved.
+
+  Title: Hoch (2013);
+ 
+  Data:
+  File is DL DATA v.04 Mplus n = 328.csv;
+  Analysis:
+  Estimator = MLR;
+  H1iterations = 50000;
+
+  Variable:
+  names are  ID Gender Age Ttenure Otenure Hours Num_mem IDcheck ValidRes
+  Density Pot_1 Pot_2 Pot_3 Pot_4 Pot_5 Pot_6 Pot_7 Pot_8 Inter_1 Inter_2 
+  Inter_3 Inter_4 Inter_5 Inter_6 TMLQ_1 TMLQ_2 TMLQ_3 TMLQ_4 TMLQ2_1 TMLQ2_2 
+  TMLQ2_3 TMLQ2_4 TMLQ2_5 TMLQ3_1 TMLQ3_2 TMLQ3_3 TMLQ3_4 TMLQ3_5 TMLQ3_6 
+  TMLQ3_7 TMLQ4_1 TMLQ4_2 TMLQ4_3 TMLQ4_4 TMLQ4_5 TMLQ4_6 TMLQ4_7 Dir_1 Dir_2 
+  Dir_3 Dir_4 Dir_5 Dir_6 TAL_1 TAL_2 TAL_3 TAL_4 TAL_5 TAL_6 MBE_1 MBE_2 MBE_3 
+  MBE_4 MBE_5 MBE_6 MBE_7 MBE_8 MBE_9 MBE_10 TFL_1 TFL_2 TFL_3 TFL_4 TFL_5 TFL_6 
+  TFL_7 TFL_8 TFL_9 TFL_10 TFL_11 TFL_12 TFL2_1 TFL2_2 TFL2_3 TFL2_4 TFL2_5 TFL2_6 
+  TFL2_7 TFL2_8 Ave_1 Ave_2 Ave_3 Ave_4 EMP_1 EMP_2 EMP_3 EMP_4 EMP_5 EMP_6 EMP_7 
+  EMP_8 EMP_9 EMP2_1 EMP2_2 EMP2_3 EMP2_4 EMP2_5 EMP2_6 EMP2_7 EMP2_8 EMP2_9 
+  EMP2_10 EMP2_11 EMP2_12 EMP2_13 HD_V_1 HD_V_2 HD_V_3 HD_V_4 HD_V_5 HD_V_6 HD_V_7 
+  HD_V_8 HD_V_9 HD_V_10 HD_V_11 HD_V_12 HD_V_13 HD_V2_1 HD_V2_2 HD_V2_3 HD_V2_4 
+  HD_V2_5 HD_V2_6 HD_V2_7 HD_V2_8 HD_V2_9 HD_V2_10 HD_V2_11 HD_V2_12 MG_H_1 MG_H_2 
+  MG_H_3 MG_H_4 MG_H_5 MG_H_6 MG_H_7 Cog_1 Cog_2 Cog_3 Cog_4 Cog_5 Cog_6 Cog_7 
+  Aff_1 Aff_2 Aff_3 Aff_4 Aff_5 Aff_6 Aff_7 Beh_1 Beh_2 Beh_3 Beh_4 Beh_5 Beh_6 
+  Beh_7 Struc_1 Struc_2 Struc_3 Struc_4 Consid_1 Consid_2 Consid_3 Consid_4 Monit_1 
+  Monit_2 Monit_3 Monit_4 Adapt_1 Adapt_2 Adapt_3 Eng_1 Eng_2 Eng_3 Eng_4 Eng_5 
+  Eng_6 Eng_7 Eng_8 Eng_9 Exh_1 Exh_2 Exh_3 Exh_4 Exh_5 Exh_6 Exh_7 Exh_8 Exh_R3 
+  Exh_R5 Exh_R7 Exh_R8 Aff_R3 Aff_R4 RMBE_3 REMP_5 RTMLQ2_4 RMBE_7 R_Cog_7 
+  ; 
+
+  Usevariables = 
+
+  Inter_1 Inter_2 Inter_3 !Team interdependence task
+  Inter_4 Inter_5 Inter_6 !Team interdependence goal
+
+  Pot_1 Pot_2 Pot_3 Pot_4 Pot_5 Pot_6 Pot_7 Pot_8 !Team potency
+
+  TFL_2 TFL_7 TFL_10 TFL2_1 TFL2_1 TFL2_5 TFL2_7 !Shared TFL 
+  Emp_3 Emp2_1 Emp2_4 Emp2_13 !Individual empowering leadership
+  Emp_4 Emp_5 Emp_6 !Team empowering leadership (missing one item not in Pearce).
+  Emp_7 Emp_8 Emp_9 !Participative (goal setting) leadership.  
+  ;
+
+  Missing = ALL(9999);
+  
+  Define:
+ 
+  Model:
+  
+  Tasks by Inter_1 Inter_2 Inter_3;
+  Goals by Inter_4 Inter_5 Inter_6;  
+ 
+  Potency by Pot_1 Pot_2 Pot_3 Pot_4 Pot_5 Pot_6 Pot_7 Pot_8; 
+ 
+  TFL by TFL_2 TFL_7 TFL_10 TFL2_1 TFL2_1 TFL2_5 TFL2_7;
+  Ind_Emp by Emp_3 Emp2_1 Emp2_4 Emp2_13;
+  Team_Emp by Emp_4 Emp_5 Emp_6;
+  Part by Emp_7 Emp_8 Emp_9;
+
+  H13 by TFL Ind_Emp Team_Emp Part;
+
+  Potency on tasks goals H13
+ 
+  Output:
+  Standardized sampstat STDYX MOD TECH1 TECH4 TECH8;
+
+!######################################################################################## 
+!######################################################################################## 
+
+ !Syntax for "The Effective Measurement of Shared Leadership: A Multi-scale Comparison";
+ !Copyright 2020, Jason Spedding, All rights reserved.
+
+  Title: Hoch, Pearce, & Welzel (2010);
+ 
+  Data:
+  File is DL DATA v.04 Mplus n = 328.csv;
+  Analysis:
+  Estimator = MLR;
+  H1iterations = 50000;
+
+  Variable:
+  names are  ID Gender Age Ttenure Otenure Hours Num_mem IDcheck ValidRes
+  Density Pot_1 Pot_2 Pot_3 Pot_4 Pot_5 Pot_6 Pot_7 Pot_8 Inter_1 Inter_2 
+  Inter_3 Inter_4 Inter_5 Inter_6 TMLQ_1 TMLQ_2 TMLQ_3 TMLQ_4 TMLQ2_1 TMLQ2_2 
+  TMLQ2_3 TMLQ2_4 TMLQ2_5 TMLQ3_1 TMLQ3_2 TMLQ3_3 TMLQ3_4 TMLQ3_5 TMLQ3_6 
+  TMLQ3_7 TMLQ4_1 TMLQ4_2 TMLQ4_3 TMLQ4_4 TMLQ4_5 TMLQ4_6 TMLQ4_7 Dir_1 Dir_2 
+  Dir_3 Dir_4 Dir_5 Dir_6 TAL_1 TAL_2 TAL_3 TAL_4 TAL_5 TAL_6 MBE_1 MBE_2 MBE_3 
+  MBE_4 MBE_5 MBE_6 MBE_7 MBE_8 MBE_9 MBE_10 TFL_1 TFL_2 TFL_3 TFL_4 TFL_5 TFL_6 
+  TFL_7 TFL_8 TFL_9 TFL_10 TFL_11 TFL_12 TFL2_1 TFL2_2 TFL2_3 TFL2_4 TFL2_5 TFL2_6 
+  TFL2_7 TFL2_8 Ave_1 Ave_2 Ave_3 Ave_4 EMP_1 EMP_2 EMP_3 EMP_4 EMP_5 EMP_6 EMP_7 
+  EMP_8 EMP_9 EMP2_1 EMP2_2 EMP2_3 EMP2_4 EMP2_5 EMP2_6 EMP2_7 EMP2_8 EMP2_9 
+  EMP2_10 EMP2_11 EMP2_12 EMP2_13 HD_V_1 HD_V_2 HD_V_3 HD_V_4 HD_V_5 HD_V_6 HD_V_7 
+  HD_V_8 HD_V_9 HD_V_10 HD_V_11 HD_V_12 HD_V_13 HD_V2_1 HD_V2_2 HD_V2_3 HD_V2_4 
+  HD_V2_5 HD_V2_6 HD_V2_7 HD_V2_8 HD_V2_9 HD_V2_10 HD_V2_11 HD_V2_12 MG_H_1 MG_H_2 
+  MG_H_3 MG_H_4 MG_H_5 MG_H_6 MG_H_7 Cog_1 Cog_2 Cog_3 Cog_4 Cog_5 Cog_6 Cog_7 
+  Aff_1 Aff_2 Aff_3 Aff_4 Aff_5 Aff_6 Aff_7 Beh_1 Beh_2 Beh_3 Beh_4 Beh_5 Beh_6 
+  Beh_7 Struc_1 Struc_2 Struc_3 Struc_4 Consid_1 Consid_2 Consid_3 Consid_4 Monit_1 
+  Monit_2 Monit_3 Monit_4 Adapt_1 Adapt_2 Adapt_3 Eng_1 Eng_2 Eng_3 Eng_4 Eng_5 
+  Eng_6 Eng_7 Eng_8 Eng_9 Exh_1 Exh_2 Exh_3 Exh_4 Exh_5 Exh_6 Exh_7 Exh_8 Exh_R3 
+  Exh_R5 Exh_R7 Exh_R8 Aff_R3 Aff_R4 RMBE_3 REMP_5 RTMLQ2_4 RMBE_7 R_Cog_7 
+  ; 
+
+  Usevariables = 
+
+  Inter_1 Inter_2 Inter_3 !Team interdependence task
+  Inter_4 Inter_5 Inter_6 !Team interdependence goal
+
+  Pot_1 Pot_2 Pot_3 Pot_4 Pot_5 Pot_6 Pot_7 Pot_8 !Team potency
+
+  TFL_2 TFL_7 TFL_10 TFL2_1 TFL2_5 TFL2_7 !Transformational leadership.
+  TAL_1 TAL_4 TAL_6 !Transactional leadership
+  EMP_9 EMP_7 EMP_8 !Directive leadership.
+  EMP_3 EMP2_1 EMP2_4 EMP2_13 !Empowerment individual.
+  EMP_4 EMP_5 EMP_6 !Empowerment team.
+  Ave_1 Ave_2 Ave_3 Ave_4 !Aversive leadership. 
+  ;
+
+  Missing = ALL(9999);
+  
+  Define:
+ 
+  Model:
+  
+  Tasks by Inter_1 Inter_2 Inter_3;
+  Goals by Inter_4 Inter_5 Inter_6;  
+ 
+  Potency by Pot_1 Pot_2 Pot_3 Pot_4 Pot_5 Pot_6 Pot_7 Pot_8; 
+ 
+  TFL by TFL_2 TFL_7 TFL_10 TFL2_1 TFL2_5 TFL2_7;
+  TAL by TAL_1 TAL_4 TAL_6;
+  Dir by EMP_9 EMP_7 EMP_8;
+  EmpInd by EMP_3 EMP2_1 EMP2_4 EMP2_13;
+  EmpTeam by EMP_4 EMP_5 EMP_6;
+  Ave by Ave_1 Ave_2 Ave_3 Ave_4;
+
+  EmpInd with EmpTeam; !correlated subscales.
+
+  HPW by TFL TAL Dir EmpInd EmpTeam Ave;
+
+  Potency on tasks goals HPW;
+ 
+  Output:
+  Standardized sampstat STDYX MOD TECH1 TECH4 TECH8;
+
+!######################################################################################## 
+!######################################################################################## 
+
+ !Syntax for "The Effective Measurement of Shared Leadership: A Multi-scale Comparison";
+ !Copyright 2020, Jason Spedding, All rights reserved.
+
+  Title: Pearce & Sims (2002);
+ 
+  Data:
+  File is DL DATA v.04 Mplus n = 328.csv;
+  Analysis:
+  Estimator = MLR;
+  H1iterations = 50000;
+
+  Variable:
+  names are  ID Gender Age Ttenure Otenure Hours Num_mem IDcheck ValidRes
+  Density Pot_1 Pot_2 Pot_3 Pot_4 Pot_5 Pot_6 Pot_7 Pot_8 Inter_1 Inter_2 
+  Inter_3 Inter_4 Inter_5 Inter_6 TMLQ_1 TMLQ_2 TMLQ_3 TMLQ_4 TMLQ2_1 TMLQ2_2 
+  TMLQ2_3 TMLQ2_4 TMLQ2_5 TMLQ3_1 TMLQ3_2 TMLQ3_3 TMLQ3_4 TMLQ3_5 TMLQ3_6 
+  TMLQ3_7 TMLQ4_1 TMLQ4_2 TMLQ4_3 TMLQ4_4 TMLQ4_5 TMLQ4_6 TMLQ4_7 Dir_1 Dir_2 
+  Dir_3 Dir_4 Dir_5 Dir_6 TAL_1 TAL_2 TAL_3 TAL_4 TAL_5 TAL_6 MBE_1 MBE_2 MBE_3 
+  MBE_4 MBE_5 MBE_6 MBE_7 MBE_8 MBE_9 MBE_10 TFL_1 TFL_2 TFL_3 TFL_4 TFL_5 TFL_6 
+  TFL_7 TFL_8 TFL_9 TFL_10 TFL_11 TFL_12 TFL2_1 TFL2_2 TFL2_3 TFL2_4 TFL2_5 TFL2_6 
+  TFL2_7 TFL2_8 Ave_1 Ave_2 Ave_3 Ave_4 EMP_1 EMP_2 EMP_3 EMP_4 EMP_5 EMP_6 EMP_7 
+  EMP_8 EMP_9 EMP2_1 EMP2_2 EMP2_3 EMP2_4 EMP2_5 EMP2_6 EMP2_7 EMP2_8 EMP2_9 
+  EMP2_10 EMP2_11 EMP2_12 EMP2_13 HD_V_1 HD_V_2 HD_V_3 HD_V_4 HD_V_5 HD_V_6 HD_V_7 
+  HD_V_8 HD_V_9 HD_V_10 HD_V_11 HD_V_12 HD_V_13 HD_V2_1 HD_V2_2 HD_V2_3 HD_V2_4 
+  HD_V2_5 HD_V2_6 HD_V2_7 HD_V2_8 HD_V2_9 HD_V2_10 HD_V2_11 HD_V2_12 MG_H_1 MG_H_2 
+  MG_H_3 MG_H_4 MG_H_5 MG_H_6 MG_H_7 Cog_1 Cog_2 Cog_3 Cog_4 Cog_5 Cog_6 Cog_7 
+  Aff_1 Aff_2 Aff_3 Aff_4 Aff_5 Aff_6 Aff_7 Beh_1 Beh_2 Beh_3 Beh_4 Beh_5 Beh_6 
+  Beh_7 Struc_1 Struc_2 Struc_3 Struc_4 Consid_1 Consid_2 Consid_3 Consid_4 Monit_1 
+  Monit_2 Monit_3 Monit_4 Adapt_1 Adapt_2 Adapt_3 Eng_1 Eng_2 Eng_3 Eng_4 Eng_5 
+  Eng_6 Eng_7 Eng_8 Eng_9 Exh_1 Exh_2 Exh_3 Exh_4 Exh_5 Exh_6 Exh_7 Exh_8 Exh_R3 
+  Exh_R5 Exh_R7 Exh_R8 Aff_R3 Aff_R4 RMBE_3 REMP_5 RTMLQ2_4 RMBE_7 R_Cog_7 
+  ; 
+
+  Usevariables = 
+
+  Inter_1 Inter_2 Inter_3 !Team interdependence task
+  Inter_4 Inter_5 Inter_6 !Team interdependence goal
+
+  Pot_1 Pot_2 Pot_3 Pot_4 Pot_5 Pot_6 Pot_7 Pot_8 !Team potency
+
+  Dir_1 Dir_2 Dir_3 ! !Directive assigned goals.
+  !Dir_4 Dir_5 Dir_6 !Directive instructional-command.
+  TAL_1 TAL_2 TAL_3 !TAL Material reward.
+  TAL_4 TAL_5 TAL_6 !TAL Personal reward.
+  MBE_1 MBE_2 MBE_3 MBE_4 MBE_5 !MBE Active.
+  MBE_6 MBE_7  MBE_9 MBE_10 !MBE_8 !MBE Passive.
+  TFL_1 TFL_2 TFL_3 !TFL Performance expectations.
+  TFL_4 TFL_5 TFL_6 !TFL Challengde Status Quo. 
+  TFL_7 TFL_8 TFL_9 !TFL Vision.
+  TFL_10 TFL_11 TFL_12 !TFL Idealism.
+  TFL2_1 TFL2_2 TFL2_3 !TFL Inspirational Communication.
+  TFL2_4 TFL2_5 TFL2_6 TFL2_7 TFL2_8 !TFL Intel Stimulation.
+  Ave_1 Ave_2 Ave_3  !Aversive leadership (differs from P&S, 2004 p191).Ave_4
+  EMP_1 EMP_2 EMP_3 !EMP Encourage reward.
+  EMP_4 EMP_5 EMP_6 !EMP Encourage teamwork.
+  EMP_7 EMP_8 EMP_9 !EMP Goal setting.
+  EMP2_1 EMP2_2 EMP2_3 EMP2_4 !EMP Independent action.
+  EMP2_5 EMP2_6 EMP2_7 !EMP Opportunity thinking.
+  EMP2_8 EMP2_9 EMP2_10 EMP2_11 EMP2_12 EMP2_13 !EMP Self Development. 
+  ;
+
+  Missing = ALL(9999);
+  
+  Define:
+ 
+  Model:
+  
+  Tasks by Inter_1 Inter_2 Inter_3;
+  Goals by Inter_4 Inter_5 Inter_6;  
+ 
+  Potency by Pot_1 Pot_2 Pot_3 Pot_4 Pot_5 Pot_6 Pot_7 Pot_8; 
+ 
+  Dir_AG by Dir_1 Dir_2 Dir_3; ! !Directive assigned goals.
+ !Dir_IC by Dir_4 Dir_5 Dir_6; !Directive instructional-command.
+  TAL_MR by TAL_1 TAL_2 TAL_3; !TAL Material reward.
+  TAL_PR by TAL_4 TAL_5 TAL_6; !TAL Personal reward.
+  MBE_Act by MBE_1 MBE_2 MBE_3 MBE_4 MBE_5; !MBE Active.
+  MBE_Pas by MBE_6 MBE_7 MBE_9 MBE_10; !MBE_8 ! MBE Passive.
+  TFL_PE by TFL_1 TFL_2 TFL_3; !TFL Performance expectations.
+  TFL_CSQ by TFL_4 TFL_5 TFL_6; !TFL Challengde Status Quo. 
+  TFL_Vis by TFL_7 TFL_8 TFL_9; !TFL Vision.
+  TFL_Ide by TFL_10 TFL_11 TFL_12; !TFL Idealism.
+  TFL_IC by TFL2_1 TFL2_2 TFL2_3; !TFL Inspirational Communication.
+  TFL_IS by TFL2_4 TFL2_5 TFL2_6 TFL2_7 TFL2_8; !TFL Intel Stimulation.
+  AVE by Ave_1 Ave_2 Ave_3; !Aversive leadership.
+  EMP_ER by EMP_1 EMP_2 EMP_3; !EMP Encourage reward.
+  EMP_ET by EMP_4 EMP_5 EMP_6; !EMP Encourage teamwork.
+  EMP_GS by EMP_7 EMP_8 EMP_9; !EMP Goal setting.
+  EMP_IA by EMP2_1 EMP2_2 EMP2_3 EMP2_4; !EMP Independent action.
+  EMP_OT by EMP2_5 EMP2_6 EMP2_7; !EMP Opportunity thinking.
+  EMP_SD by EMP2_8 EMP2_9 EMP2_10 EMP2_11 EMP2_12 EMP2_13; !EMP Self Development.
+
+ !2nd Order Factor.
+ !DIR by Dir_AG !Dir_IC; !single subscale.
+  TAL by TAL_MR TAL_PR; 
+  MBE by MBE_Act MBE_Pas;
+  TFL by TFL_PE TFL_CSQ TFL_Vis TFL_Ide TFL_IC TFL_IS;
+ !AVE !single subscale.
+  EMP by EMP_ER EMP_ET EMP_GS EMP_IA EMP_OT EMP_SD;
+
+ !3rd Order Factor.
+  PS by DIR_AG TAL MBE TFL AVE EMP 
+
+  TFL2_8 with TFL2_7; !correlated items.
+  MBE with AVE; !correlated subscales.
+ !EMP_IA by EMP2_5; !potential cross-loading.
+
+  Potency on tasks goals PS;
+ 
+  Output:
+  Standardized sampstat STDYX MOD TECH1 TECH4 TECH8;
+
+!######################################################################################## 
+!######################################################################################## 
+
+ !Syntax for "The Effective Measurement of Shared Leadership: A Multi-scale Comparison";
+ !Copyright 2020, Jason Spedding, All rights reserved.
+
+  Title: Pearce, Yoo, & Alavi (2004);
+ 
+  Data:
+  File is DL DATA v.04 Mplus n = 328.csv;
+  Analysis:
+  Estimator = MLR;
+  H1iterations = 50000;
+
+  Variable:
+  names are  ID Gender Age Ttenure Otenure Hours Num_mem IDcheck ValidRes
+  Density Pot_1 Pot_2 Pot_3 Pot_4 Pot_5 Pot_6 Pot_7 Pot_8 Inter_1 Inter_2 
+  Inter_3 Inter_4 Inter_5 Inter_6 TMLQ_1 TMLQ_2 TMLQ_3 TMLQ_4 TMLQ2_1 TMLQ2_2 
+  TMLQ2_3 TMLQ2_4 TMLQ2_5 TMLQ3_1 TMLQ3_2 TMLQ3_3 TMLQ3_4 TMLQ3_5 TMLQ3_6 
+  TMLQ3_7 TMLQ4_1 TMLQ4_2 TMLQ4_3 TMLQ4_4 TMLQ4_5 TMLQ4_6 TMLQ4_7 Dir_1 Dir_2 
+  Dir_3 Dir_4 Dir_5 Dir_6 TAL_1 TAL_2 TAL_3 TAL_4 TAL_5 TAL_6 MBE_1 MBE_2 MBE_3 
+  MBE_4 MBE_5 MBE_6 MBE_7 MBE_8 MBE_9 MBE_10 TFL_1 TFL_2 TFL_3 TFL_4 TFL_5 TFL_6 
+  TFL_7 TFL_8 TFL_9 TFL_10 TFL_11 TFL_12 TFL2_1 TFL2_2 TFL2_3 TFL2_4 TFL2_5 TFL2_6 
+  TFL2_7 TFL2_8 Ave_1 Ave_2 Ave_3 Ave_4 EMP_1 EMP_2 EMP_3 EMP_4 EMP_5 EMP_6 EMP_7 
+  EMP_8 EMP_9 EMP2_1 EMP2_2 EMP2_3 EMP2_4 EMP2_5 EMP2_6 EMP2_7 EMP2_8 EMP2_9 
+  EMP2_10 EMP2_11 EMP2_12 EMP2_13 HD_V_1 HD_V_2 HD_V_3 HD_V_4 HD_V_5 HD_V_6 HD_V_7 
+  HD_V_8 HD_V_9 HD_V_10 HD_V_11 HD_V_12 HD_V_13 HD_V2_1 HD_V2_2 HD_V2_3 HD_V2_4 
+  HD_V2_5 HD_V2_6 HD_V2_7 HD_V2_8 HD_V2_9 HD_V2_10 HD_V2_11 HD_V2_12 MG_H_1 MG_H_2 
+  MG_H_3 MG_H_4 MG_H_5 MG_H_6 MG_H_7 Cog_1 Cog_2 Cog_3 Cog_4 Cog_5 Cog_6 Cog_7 
+  Aff_1 Aff_2 Aff_3 Aff_4 Aff_5 Aff_6 Aff_7 Beh_1 Beh_2 Beh_3 Beh_4 Beh_5 Beh_6 
+  Beh_7 Struc_1 Struc_2 Struc_3 Struc_4 Consid_1 Consid_2 Consid_3 Consid_4 Monit_1 
+  Monit_2 Monit_3 Monit_4 Adapt_1 Adapt_2 Adapt_3 Eng_1 Eng_2 Eng_3 Eng_4 Eng_5 
+  Eng_6 Eng_7 Eng_8 Eng_9 Exh_1 Exh_2 Exh_3 Exh_4 Exh_5 Exh_6 Exh_7 Exh_8 Exh_R3 
+  Exh_R5 Exh_R7 Exh_R8 Aff_R3 Aff_R4 RMBE_3 REMP_5 RTMLQ2_4 RMBE_7 R_Cog_7 
+  ; 
+
+  Usevariables = 
+
+  Inter_1 Inter_2 Inter_3 !Team interdependence task
+  Inter_4 Inter_5 Inter_6 !Team interdependence goal
+
+  Pot_1 Pot_2 Pot_3 Pot_4 Pot_5 Pot_6 Pot_7 Pot_8 !Team potency
+
+  EMP2_1 EMP2_2 EMP2_3 EMP2_4 !Empowering leadership.
+  Dir_1 Dir_2 Dir_3 !Directive leadership.
+  TAL_6 EMP_1 EMP_2 EMP_3 !Transactional leadership.
+  TFL_7 TFL_8 TFL_9 !Transformational leadership. 
+  ;
+
+  Missing = ALL(9999);
+  
+  Define:
+ 
+  Model:
+  
+  Tasks by Inter_1 Inter_2 Inter_3;
+  Goals by Inter_4 Inter_5 Inter_6;  
+ 
+  Potency by Pot_1 Pot_2 Pot_3 Pot_4 Pot_5 Pot_6 Pot_7 Pot_8; 
+ 
+  Emp by EMP2_1 EMP2_2 EMP2_3 EMP2_4;
+  Dir by Dir_1 Dir_2 Dir_3;
+  TAL by TAL_6 EMP_1 EMP_2 EMP_3;
+  TFL by TFL_7 TFL_8 TFL_9;
+
+  PYA by Emp Dir TAL TFL;
+
+  Potency on Tasks Goals PYA;
+ 
+  Output:
+  Standardized sampstat STDYX MOD TECH1 TECH4 TECH8;
+
+!######################################################################################## 
+!######################################################################################## 
+
+ !Syntax for "The Effective Measurement of Shared Leadership: A Multi-scale Comparison";
+ !Copyright 2020, Jason Spedding, All rights reserved.
+
+  Title: Sherony & Green (2002);
+ 
+  Data:
+  File is DL DATA v.04 Mplus n = 328.csv;
+  Analysis:
+  Estimator = MLR;
+  H1iterations = 50000;
+
+  Variable:
+  names are  ID Gender Age Ttenure Otenure Hours Num_mem IDcheck ValidRes
+  Density Pot_1 Pot_2 Pot_3 Pot_4 Pot_5 Pot_6 Pot_7 Pot_8 Inter_1 Inter_2 
+  Inter_3 Inter_4 Inter_5 Inter_6 TMLQ_1 TMLQ_2 TMLQ_3 TMLQ_4 TMLQ2_1 TMLQ2_2 
+  TMLQ2_3 TMLQ2_4 TMLQ2_5 TMLQ3_1 TMLQ3_2 TMLQ3_3 TMLQ3_4 TMLQ3_5 TMLQ3_6 
+  TMLQ3_7 TMLQ4_1 TMLQ4_2 TMLQ4_3 TMLQ4_4 TMLQ4_5 TMLQ4_6 TMLQ4_7 Dir_1 Dir_2 
+  Dir_3 Dir_4 Dir_5 Dir_6 TAL_1 TAL_2 TAL_3 TAL_4 TAL_5 TAL_6 MBE_1 MBE_2 MBE_3 
+  MBE_4 MBE_5 MBE_6 MBE_7 MBE_8 MBE_9 MBE_10 TFL_1 TFL_2 TFL_3 TFL_4 TFL_5 TFL_6 
+  TFL_7 TFL_8 TFL_9 TFL_10 TFL_11 TFL_12 TFL2_1 TFL2_2 TFL2_3 TFL2_4 TFL2_5 TFL2_6 
+  TFL2_7 TFL2_8 Ave_1 Ave_2 Ave_3 Ave_4 EMP_1 EMP_2 EMP_3 EMP_4 EMP_5 EMP_6 EMP_7 
+  EMP_8 EMP_9 EMP2_1 EMP2_2 EMP2_3 EMP2_4 EMP2_5 EMP2_6 EMP2_7 EMP2_8 EMP2_9 
+  EMP2_10 EMP2_11 EMP2_12 EMP2_13 HD_V_1 HD_V_2 HD_V_3 HD_V_4 HD_V_5 HD_V_6 HD_V_7 
+  HD_V_8 HD_V_9 HD_V_10 HD_V_11 HD_V_12 HD_V_13 HD_V2_1 HD_V2_2 HD_V2_3 HD_V2_4 
+  HD_V2_5 HD_V2_6 HD_V2_7 HD_V2_8 HD_V2_9 HD_V2_10 HD_V2_11 HD_V2_12 MG_H_1 MG_H_2 
+  MG_H_3 MG_H_4 MG_H_5 MG_H_6 MG_H_7 Cog_1 Cog_2 Cog_3 Cog_4 Cog_5 Cog_6 Cog_7 
+  Aff_1 Aff_2 Aff_3 Aff_4 Aff_5 Aff_6 Aff_7 Beh_1 Beh_2 Beh_3 Beh_4 Beh_5 Beh_6 
+  Beh_7 Struc_1 Struc_2 Struc_3 Struc_4 Consid_1 Consid_2 Consid_3 Consid_4 Monit_1 
+  Monit_2 Monit_3 Monit_4 Adapt_1 Adapt_2 Adapt_3 Eng_1 Eng_2 Eng_3 Eng_4 Eng_5 
+  Eng_6 Eng_7 Eng_8 Eng_9 Exh_1 Exh_2 Exh_3 Exh_4 Exh_5 Exh_6 Exh_7 Exh_8 Exh_R3 
+  Exh_R5 Exh_R7 Exh_R8 Aff_R3 Aff_R4 RMBE_3 REMP_5 RTMLQ2_4 RMBE_7 R_Cog_7 
+  ; 
+
+  Usevariables = 
+
+  Inter_1 Inter_2 Inter_3 !Team interdependence task
+  Inter_4 Inter_5 Inter_6 !Team interdependence goal
+
+  Pot_1 Pot_2 Pot_3 Pot_4 Pot_5 Pot_6 Pot_7 Pot_8 !Team potency
+
+  Beh_1 Beh_2 Beh_4 Beh_5 Beh_6 Beh_7 !Team behavioural processes (Team LMX)
+  ;
+
+  Missing = ALL(9999);
+  
+  Define:
+ 
+  Model:
+  
+  Tasks by Inter_1 Inter_2 Inter_3;
+  Goals by Inter_4 Inter_5 Inter_6;  
+ 
+  Potency by Pot_1 Pot_2 Pot_3 Pot_4 Pot_5 Pot_6 Pot_7 Pot_8; 
+ 
+  SG by Beh_1 Beh_2 Beh_4 Beh_5 Beh_6 Beh_7;
+
+  Potency on Tasks Goals SG;
+ 
+  Output:
+  Standardized sampstat STDYX MOD TECH1 TECH4 TECH8;
+
+!######################################################################################## 
+!######################################################################################## 
+
+ !Syntax for "The Effective Measurement of Shared Leadership: A Multi-scale Comparison";
+ !Copyright 2020, Jason Spedding, All rights reserved.
+
+  Title: Hiller, Day, & Vance (2006);
+ 
+  Data:
+  File is DL DATA v.04 Mplus n = 328.csv;
+  Analysis:
+  Estimator = MLR;
+  H1iterations = 50000;
+
+  Variable:
+  names are  ID Gender Age Ttenure Otenure Hours Num_mem IDcheck ValidRes
+  Density Pot_1 Pot_2 Pot_3 Pot_4 Pot_5 Pot_6 Pot_7 Pot_8 Inter_1 Inter_2 
+  Inter_3 Inter_4 Inter_5 Inter_6 TMLQ_1 TMLQ_2 TMLQ_3 TMLQ_4 TMLQ2_1 TMLQ2_2 
+  TMLQ2_3 TMLQ2_4 TMLQ2_5 TMLQ3_1 TMLQ3_2 TMLQ3_3 TMLQ3_4 TMLQ3_5 TMLQ3_6 
+  TMLQ3_7 TMLQ4_1 TMLQ4_2 TMLQ4_3 TMLQ4_4 TMLQ4_5 TMLQ4_6 TMLQ4_7 Dir_1 Dir_2 
+  Dir_3 Dir_4 Dir_5 Dir_6 TAL_1 TAL_2 TAL_3 TAL_4 TAL_5 TAL_6 MBE_1 MBE_2 MBE_3 
+  MBE_4 MBE_5 MBE_6 MBE_7 MBE_8 MBE_9 MBE_10 TFL_1 TFL_2 TFL_3 TFL_4 TFL_5 TFL_6 
+  TFL_7 TFL_8 TFL_9 TFL_10 TFL_11 TFL_12 TFL2_1 TFL2_2 TFL2_3 TFL2_4 TFL2_5 TFL2_6 
+  TFL2_7 TFL2_8 Ave_1 Ave_2 Ave_3 Ave_4 EMP_1 EMP_2 EMP_3 EMP_4 EMP_5 EMP_6 EMP_7 
+  EMP_8 EMP_9 EMP2_1 EMP2_2 EMP2_3 EMP2_4 EMP2_5 EMP2_6 EMP2_7 EMP2_8 EMP2_9 
+  EMP2_10 EMP2_11 EMP2_12 EMP2_13 HD_V_1 HD_V_2 HD_V_3 HD_V_4 HD_V_5 HD_V_6 HD_V_7 
+  HD_V_8 HD_V_9 HD_V_10 HD_V_11 HD_V_12 HD_V_13 HD_V2_1 HD_V2_2 HD_V2_3 HD_V2_4 
+  HD_V2_5 HD_V2_6 HD_V2_7 HD_V2_8 HD_V2_9 HD_V2_10 HD_V2_11 HD_V2_12 MG_H_1 MG_H_2 
+  MG_H_3 MG_H_4 MG_H_5 MG_H_6 MG_H_7 Cog_1 Cog_2 Cog_3 Cog_4 Cog_5 Cog_6 Cog_7 
+  Aff_1 Aff_2 Aff_3 Aff_4 Aff_5 Aff_6 Aff_7 Beh_1 Beh_2 Beh_3 Beh_4 Beh_5 Beh_6 
+  Beh_7 Struc_1 Struc_2 Struc_3 Struc_4 Consid_1 Consid_2 Consid_3 Consid_4 Monit_1 
+  Monit_2 Monit_3 Monit_4 Adapt_1 Adapt_2 Adapt_3 Eng_1 Eng_2 Eng_3 Eng_4 Eng_5 
+  Eng_6 Eng_7 Eng_8 Eng_9 Exh_1 Exh_2 Exh_3 Exh_4 Exh_5 Exh_6 Exh_7 Exh_8 Exh_R3 
+  Exh_R5 Exh_R7 Exh_R8 Aff_R3 Aff_R4 RMBE_3 REMP_5 RTMLQ2_4 RMBE_7 R_Cog_7 
+  ; 
+
+  Usevariables = 
+
+  Inter_1 Inter_2 Inter_3 !Team interdependence task
+  Inter_4 Inter_5 Inter_6 !Team interdependence goal
+
+  Pot_1 Pot_2 Pot_3 Pot_4 Pot_5 Pot_6 Pot_7 Pot_8 !Team potency
+   
+  HD_V_1 HD_V_2 HD_V_3 HD_V_4 HD_V_5 HD_V_6 !Planning & Organising.
+  HD_V_7 HD_V_8 HD_V_9 HD_V_10 HD_V_11 HD_V_12 HD_V_13 !Problem Solving.
+  HD_V2_1 HD_V2_2 HD_V2_3 HD_V2_4 HD_V2_5 HD_V2_6 !Support & Consideration.
+  HD_V2_7 HD_V2_8 HD_V2_9 HD_V2_10 HD_V2_11 HD_V2_12 !Developing & Mentoring.
+  ;
+  
+  Missing = ALL(9999);
+  
+  Define:
+ 
+  Model:
+  
+  Tasks by Inter_1 Inter_2 Inter_3;
+  Goals by Inter_4 Inter_5 Inter_6;  
+ 
+  Potency by Pot_1 Pot_2 Pot_3 Pot_4 Pot_5 Pot_6 Pot_7 Pot_8; 
+ 
+  Planning by HD_V_1 HD_V_2 HD_V_3 HD_V_4 HD_V_5 HD_V_6;
+  ProbSol by HD_V_7 HD_V_8 HD_V_9 HD_V_10 HD_V_11 HD_V_12 HD_V_13;
+  SuppCons by HD_V2_1 HD_V2_2 HD_V2_3 HD_V2_4 HD_V2_5 HD_V2_6;
+  DevMent by HD_V2_7 HD_V2_8 HD_V2_9 HD_V2_10 HD_V2_11 HD_V2_12;
+
+  HDV by Planning ProbSol SuppCons DevMent;
+
+  Potency on tasks goals HDV;
+
+  Output:
+  Standardized sampstat STDYX MOD TECH1 TECH4 TECH8;
+
+!######################################################################################## 
+!######################################################################################## 
+
+ !Syntax for "The Effective Measurement of Shared Leadership: A Multi-scale Comparison";
+ !Copyright 2020, Jason Spedding, All rights reserved.
+
+  Title: Hoch & Kozlowski (2014);
+ 
+  Data:
+  File is DL DATA v.04 Mplus n = 328.csv;
+  Analysis:
+  Estimator = MLR;
+  H1iterations = 50000;
+
+  Variable:
+  names are  ID Gender Age Ttenure Otenure Hours Num_mem IDcheck ValidRes
+  Density Pot_1 Pot_2 Pot_3 Pot_4 Pot_5 Pot_6 Pot_7 Pot_8 Inter_1 Inter_2 
+  Inter_3 Inter_4 Inter_5 Inter_6 TMLQ_1 TMLQ_2 TMLQ_3 TMLQ_4 TMLQ2_1 TMLQ2_2 
+  TMLQ2_3 TMLQ2_4 TMLQ2_5 TMLQ3_1 TMLQ3_2 TMLQ3_3 TMLQ3_4 TMLQ3_5 TMLQ3_6 
+  TMLQ3_7 TMLQ4_1 TMLQ4_2 TMLQ4_3 TMLQ4_4 TMLQ4_5 TMLQ4_6 TMLQ4_7 Dir_1 Dir_2 
+  Dir_3 Dir_4 Dir_5 Dir_6 TAL_1 TAL_2 TAL_3 TAL_4 TAL_5 TAL_6 MBE_1 MBE_2 MBE_3 
+  MBE_4 MBE_5 MBE_6 MBE_7 MBE_8 MBE_9 MBE_10 TFL_1 TFL_2 TFL_3 TFL_4 TFL_5 TFL_6 
+  TFL_7 TFL_8 TFL_9 TFL_10 TFL_11 TFL_12 TFL2_1 TFL2_2 TFL2_3 TFL2_4 TFL2_5 TFL2_6 
+  TFL2_7 TFL2_8 Ave_1 Ave_2 Ave_3 Ave_4 EMP_1 EMP_2 EMP_3 EMP_4 EMP_5 EMP_6 EMP_7 
+  EMP_8 EMP_9 EMP2_1 EMP2_2 EMP2_3 EMP2_4 EMP2_5 EMP2_6 EMP2_7 EMP2_8 EMP2_9 
+  EMP2_10 EMP2_11 EMP2_12 EMP2_13 HD_V_1 HD_V_2 HD_V_3 HD_V_4 HD_V_5 HD_V_6 HD_V_7 
+  HD_V_8 HD_V_9 HD_V_10 HD_V_11 HD_V_12 HD_V_13 HD_V2_1 HD_V2_2 HD_V2_3 HD_V2_4 
+  HD_V2_5 HD_V2_6 HD_V2_7 HD_V2_8 HD_V2_9 HD_V2_10 HD_V2_11 HD_V2_12 MG_H_1 MG_H_2 
+  MG_H_3 MG_H_4 MG_H_5 MG_H_6 MG_H_7 Cog_1 Cog_2 Cog_3 Cog_4 Cog_5 Cog_6 Cog_7 
+  Aff_1 Aff_2 Aff_3 Aff_4 Aff_5 Aff_6 Aff_7 Beh_1 Beh_2 Beh_3 Beh_4 Beh_5 Beh_6 
+  Beh_7 Struc_1 Struc_2 Struc_3 Struc_4 Consid_1 Consid_2 Consid_3 Consid_4 Monit_1 
+  Monit_2 Monit_3 Monit_4 Adapt_1 Adapt_2 Adapt_3 Eng_1 Eng_2 Eng_3 Eng_4 Eng_5 
+  Eng_6 Eng_7 Eng_8 Eng_9 Exh_1 Exh_2 Exh_3 Exh_4 Exh_5 Exh_6 Exh_7 Exh_8 Exh_R3 
+  Exh_R5 Exh_R7 Exh_R8 Aff_R3 Aff_R4 RMBE_3 REMP_5 RTMLQ2_4 RMBE_7 R_Cog_7 
+  ; 
+
+  Usevariables = 
+
+  Inter_1 Inter_2 Inter_3 !Team interdependence task
+  Inter_4 Inter_5 Inter_6 !Team interdependence goal
+
+  Pot_1 Pot_2 Pot_3 Pot_4 Pot_5 Pot_6 Pot_7 Pot_8 !Team potency
+   
+  Cog_1 Cog_2 Cog_3 Cog_4 Cog_5 Cog_6 Cog_7 !Team cognitive processes (learning) 
+  Aff_1 Aff_2 Aff_R3 Aff_R4 Aff_5 Aff_6 Aff_7 !Team affective processes (support)
+  Beh_1 Beh_2 Beh_3 Beh_4 Beh_5 Beh_6 Beh_7 !Team behavioural processes (Team LMX)
+  ;
+  
+  Missing = ALL(9999);
+  
+  Define:
+ 
+  Model:
+  
+  Tasks by Inter_1 Inter_2 Inter_3;
+  Goals by Inter_4 Inter_5 Inter_6;  
+ 
+  Potency by Pot_1 Pot_2 Pot_3 Pot_4 Pot_5 Pot_6 Pot_7 Pot_8; 
+ 
+  Cog by Cog_1 Cog_2 Cog_3 Cog_4 Cog_5 Cog_6 Cog_7; 
+  Aff by Aff_1 Aff_2 Aff_R3 Aff_R4 Aff_5 Aff_6 Aff_7;
+  Beh by Beh_1 Beh_2 Beh_3 Beh_4 Beh_5 Beh_6 Beh_7;
+  
+  Aff_R3 with Aff_R4; !correlated reverse coded items.
+  
+  HK by Cog Aff Beh;
+
+  Potency on tasks goals HK;
+
+  Output:
+  Standardized sampstat STDYX MOD TECH1 TECH4 TECH8;
+
+!######################################################################################## 
+!######################################################################################## 
+
+ !Syntax for "The Effective Measurement of Shared Leadership: A Multi-scale Comparison";
+ !Copyright 2020, Jason Spedding, All rights reserved.
+
+  Title: Muethal, Gehrlein, & Hoegl (2012);
+ 
+  Data:
+  File is DL DATA v.04 Mplus n = 328.csv;
+  Analysis:
+  Estimator = MLR;
+  H1iterations = 50000;
+
+  Variable:
+  names are  ID Gender Age Ttenure Otenure Hours Num_mem IDcheck ValidRes
+  Density Pot_1 Pot_2 Pot_3 Pot_4 Pot_5 Pot_6 Pot_7 Pot_8 Inter_1 Inter_2 
+  Inter_3 Inter_4 Inter_5 Inter_6 TMLQ_1 TMLQ_2 TMLQ_3 TMLQ_4 TMLQ2_1 TMLQ2_2 
+  TMLQ2_3 TMLQ2_4 TMLQ2_5 TMLQ3_1 TMLQ3_2 TMLQ3_3 TMLQ3_4 TMLQ3_5 TMLQ3_6 
+  TMLQ3_7 TMLQ4_1 TMLQ4_2 TMLQ4_3 TMLQ4_4 TMLQ4_5 TMLQ4_6 TMLQ4_7 Dir_1 Dir_2 
+  Dir_3 Dir_4 Dir_5 Dir_6 TAL_1 TAL_2 TAL_3 TAL_4 TAL_5 TAL_6 MBE_1 MBE_2 MBE_3 
+  MBE_4 MBE_5 MBE_6 MBE_7 MBE_8 MBE_9 MBE_10 TFL_1 TFL_2 TFL_3 TFL_4 TFL_5 TFL_6 
+  TFL_7 TFL_8 TFL_9 TFL_10 TFL_11 TFL_12 TFL2_1 TFL2_2 TFL2_3 TFL2_4 TFL2_5 TFL2_6 
+  TFL2_7 TFL2_8 Ave_1 Ave_2 Ave_3 Ave_4 EMP_1 EMP_2 EMP_3 EMP_4 EMP_5 EMP_6 EMP_7 
+  EMP_8 EMP_9 EMP2_1 EMP2_2 EMP2_3 EMP2_4 EMP2_5 EMP2_6 EMP2_7 EMP2_8 EMP2_9 
+  EMP2_10 EMP2_11 EMP2_12 EMP2_13 HD_V_1 HD_V_2 HD_V_3 HD_V_4 HD_V_5 HD_V_6 HD_V_7 
+  HD_V_8 HD_V_9 HD_V_10 HD_V_11 HD_V_12 HD_V_13 HD_V2_1 HD_V2_2 HD_V2_3 HD_V2_4 
+  HD_V2_5 HD_V2_6 HD_V2_7 HD_V2_8 HD_V2_9 HD_V2_10 HD_V2_11 HD_V2_12 MG_H_1 MG_H_2 
+  MG_H_3 MG_H_4 MG_H_5 MG_H_6 MG_H_7 Cog_1 Cog_2 Cog_3 Cog_4 Cog_5 Cog_6 Cog_7 
+  Aff_1 Aff_2 Aff_3 Aff_4 Aff_5 Aff_6 Aff_7 Beh_1 Beh_2 Beh_3 Beh_4 Beh_5 Beh_6 
+  Beh_7 Struc_1 Struc_2 Struc_3 Struc_4 Consid_1 Consid_2 Consid_3 Consid_4 Monit_1 
+  Monit_2 Monit_3 Monit_4 Adapt_1 Adapt_2 Adapt_3 Eng_1 Eng_2 Eng_3 Eng_4 Eng_5 
+  Eng_6 Eng_7 Eng_8 Eng_9 Exh_1 Exh_2 Exh_3 Exh_4 Exh_5 Exh_6 Exh_7 Exh_8 Exh_R3 
+  Exh_R5 Exh_R7 Exh_R8 Aff_R3 Aff_R4 RMBE_3 REMP_5 RTMLQ2_4 RMBE_7 R_Cog_7 
+  ; 
+
+  Usevariables = 
+
+  Inter_1 Inter_2 Inter_3 !Team interdependence task
+  Inter_4 Inter_5 Inter_6 !Team interdependence goal
+
+  Pot_1 Pot_2 Pot_3 Pot_4 Pot_5 Pot_6 Pot_7 Pot_8 !Team potency
+   
+  MG_H_1 MG_H_2 MG_H_3 MG_H_4 !External directed behaviour.
+  MG_H_5 MG_H_6 MG_H_7 !Internal directed behaviour.
+  ;
+  
+  Missing = ALL(9999);
+  
+  Define:
+ 
+  Model:
+  
+  Tasks by Inter_1 Inter_2 Inter_3;
+  Goals by Inter_4 Inter_5 Inter_6;  
+ 
+  Potency by Pot_1 Pot_2 Pot_3 Pot_4 Pot_5 Pot_6 Pot_7 Pot_8; 
+ 
+  Ext by MG_H_1 MG_H_2 MG_H_3 MG_H_4;
+  Int by MG_H_5 MG_H_6 MG_H_7;
+  
+  MGH by Ext@.74 Int@.71; !factor loadings constrained to match EFA values.
+
+  Potency on tasks goals MGH;
+
+  Output:
+  Standardized sampstat STDYX MOD TECH1 TECH4 TECH8;
+
+!######################################################################################## 
+!######################################################################################## 
+
+ !Syntax for "The Effective Measurement of Shared Leadership: A Multi-scale Comparison";
+ !Copyright 2020, Jason Spedding, All rights reserved.
+
+  Title: Ziegert (2005);
+ 
+  Data:
+  File is DL DATA v.04 Mplus n = 328.csv;
+  Analysis:
+  Estimator = MLR;
+  H1iterations = 50000;
+
+  Variable:
+  names are  ID Gender Age Ttenure Otenure Hours Num_mem IDcheck ValidRes
+  Density Pot_1 Pot_2 Pot_3 Pot_4 Pot_5 Pot_6 Pot_7 Pot_8 Inter_1 Inter_2 
+  Inter_3 Inter_4 Inter_5 Inter_6 TMLQ_1 TMLQ_2 TMLQ_3 TMLQ_4 TMLQ2_1 TMLQ2_2 
+  TMLQ2_3 TMLQ2_4 TMLQ2_5 TMLQ3_1 TMLQ3_2 TMLQ3_3 TMLQ3_4 TMLQ3_5 TMLQ3_6 
+  TMLQ3_7 TMLQ4_1 TMLQ4_2 TMLQ4_3 TMLQ4_4 TMLQ4_5 TMLQ4_6 TMLQ4_7 Dir_1 Dir_2 
+  Dir_3 Dir_4 Dir_5 Dir_6 TAL_1 TAL_2 TAL_3 TAL_4 TAL_5 TAL_6 MBE_1 MBE_2 MBE_3 
+  MBE_4 MBE_5 MBE_6 MBE_7 MBE_8 MBE_9 MBE_10 TFL_1 TFL_2 TFL_3 TFL_4 TFL_5 TFL_6 
+  TFL_7 TFL_8 TFL_9 TFL_10 TFL_11 TFL_12 TFL2_1 TFL2_2 TFL2_3 TFL2_4 TFL2_5 TFL2_6 
+  TFL2_7 TFL2_8 Ave_1 Ave_2 Ave_3 Ave_4 EMP_1 EMP_2 EMP_3 EMP_4 EMP_5 EMP_6 EMP_7 
+  EMP_8 EMP_9 EMP2_1 EMP2_2 EMP2_3 EMP2_4 EMP2_5 EMP2_6 EMP2_7 EMP2_8 EMP2_9 
+  EMP2_10 EMP2_11 EMP2_12 EMP2_13 HD_V_1 HD_V_2 HD_V_3 HD_V_4 HD_V_5 HD_V_6 HD_V_7 
+  HD_V_8 HD_V_9 HD_V_10 HD_V_11 HD_V_12 HD_V_13 HD_V2_1 HD_V2_2 HD_V2_3 HD_V2_4 
+  HD_V2_5 HD_V2_6 HD_V2_7 HD_V2_8 HD_V2_9 HD_V2_10 HD_V2_11 HD_V2_12 MG_H_1 MG_H_2 
+  MG_H_3 MG_H_4 MG_H_5 MG_H_6 MG_H_7 Cog_1 Cog_2 Cog_3 Cog_4 Cog_5 Cog_6 Cog_7 
+  Aff_1 Aff_2 Aff_3 Aff_4 Aff_5 Aff_6 Aff_7 Beh_1 Beh_2 Beh_3 Beh_4 Beh_5 Beh_6 
+  Beh_7 Struc_1 Struc_2 Struc_3 Struc_4 Consid_1 Consid_2 Consid_3 Consid_4 Monit_1 
+  Monit_2 Monit_3 Monit_4 Adapt_1 Adapt_2 Adapt_3 Eng_1 Eng_2 Eng_3 Eng_4 Eng_5 
+  Eng_6 Eng_7 Eng_8 Eng_9 Exh_1 Exh_2 Exh_3 Exh_4 Exh_5 Exh_6 Exh_7 Exh_8 Exh_R3 
+  Exh_R5 Exh_R7 Exh_R8 Aff_R3 Aff_R4 RMBE_3 REMP_5 RTMLQ2_4 RMBE_7 R_Cog_7 
+  ; 
+
+  Usevariables = 
+
+  Inter_1 Inter_2 Inter_3 !Team interdependence task
+  Inter_4 Inter_5 Inter_6 !Team interdependence goal
+
+  Pot_1 Pot_2 Pot_3 Pot_4 Pot_5 Pot_6 Pot_7 Pot_8 !Team potency
+   
+  Struc_1 Struc_2 Struc_3 Struc_4 !Initiating structure.
+  Consid_1 Consid_2 Consid_3 Consid_4 !Consideration.
+  Monit_1 Monit_2 Monit_3 Monit_4 !Monitoring.
+  TAL_6 EMP_1 EMP_2 EMP_3 !Contingent reward.
+  TMLQ3_3 TFL_7 TFL_8 !Visionary/Inspirational leadership.
+  ;
+  
+  Missing = ALL(9999);
+  
+  Define:
+ 
+  Model:
+  
+  Tasks by Inter_1 Inter_2 Inter_3;
+  Goals by Inter_4 Inter_5 Inter_6;  
+ 
+  Potency by Pot_1 Pot_2 Pot_3 Pot_4 Pot_5 Pot_6 Pot_7 Pot_8; 
+ 
+  InitStru by Struc_1 Struc_2 Struc_3 Struc_4;
+  Consid by Consid_1 Consid_2 Consid_3 Consid_4;
+  Monitor by Monit_1 Monit_2 Monit_3 Monit_4;
+  ContRew by TAL_6 EMP_1 EMP_2 EMP_3;
+  Vision by TMLQ3_3 TFL_7 TFL_8;
+  
+  Z2005 by InitStru Consid Monitor ContRew Vision;
+
+  Potency on tasks goals Z2005;
+
+  Output:
+  Standardized sampstat STDYX MOD TECH1 TECH4 TECH8;
+
+!######################################################################################## 
